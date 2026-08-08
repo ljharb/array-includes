@@ -91,4 +91,24 @@ module.exports = function (includes, t) {
 
 		st.end();
 	});
+
+	t.test(
+		'exotic objects: uses Get, not HasProperty, unlike indexOf',
+		{ skip: typeof Proxy !== 'function' },
+		function (st) {
+			var target = [1, 2, 3, 4, 5];
+			var proxy = new Proxy(target, {
+				has: function () { return false; },
+				get: function (targ, k, r) { return Reflect.get(targ, k, r); }
+			});
+
+			st.equal(
+				true,
+				includes(proxy, 3),
+				'a lying `has` trap does not stop an element visible via `get` from being found'
+			);
+
+			st.end();
+		}
+	);
 };
