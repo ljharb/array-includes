@@ -6,13 +6,13 @@ var ToObject = require('es-object-atoms/ToObject');
 var SameValueZero = require('es-abstract/2025/SameValueZero');
 var $isNaN = require('math-intrinsics/isNaN');
 var $isFinite = require('math-intrinsics/isFinite');
+var $max = require('math-intrinsics/max');
 var GetIntrinsic = require('get-intrinsic');
 var callBound = require('call-bound');
 var isString = require('is-string');
 
 var $charAt = callBound('String.prototype.charAt');
 var $indexOf = GetIntrinsic('%Array.prototype.indexOf%'); // TODO: use callBind.apply without breaking IE 8
-var $max = GetIntrinsic('%Math.max%');
 
 module.exports = function includes(searchElement) {
 	var fromIndex = arguments.length > 1 ? ToIntegerOrInfinity(arguments[1]) : 0;
